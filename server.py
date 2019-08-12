@@ -35,7 +35,9 @@ def download(group):
     path = os.path.join("files", group)
     if os.path.exists(path):
         with tarfile.open(mode="w:gz", fileobj=dlfile) as tar:
-            tar.add(path, arcname=os.path.basename(path))
+            for i in os.listdir(path):
+                filepath = os.path.join(path, i)
+                tar.add(filepath, arcname=os.path.basename(filepath))
         shutil.rmtree(path)
         return dlfile.getvalue()
     return "File not found"

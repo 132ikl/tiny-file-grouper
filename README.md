@@ -7,4 +7,4 @@ Example:
     curl -T file2.txt -c /dev/null --digest -u user:password http://localhost:5000/testgroup/
     curl -c /dev/null --digest -u user:password http://localhost:5000/download/testgroup --output test.tar.gz
 
-The file test.tar.gz will contain a folder called "testgroup", which contains all files added to the group previously.
+The file test.tar.gz will all files added to the group previously. No traces of testgroup will be left after this point.
