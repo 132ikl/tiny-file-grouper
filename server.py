@@ -1,9 +1,11 @@
-from flask import Flask, request
-from flask_httpauth import HTTPDigestAuth
 import io
-import tarfile
 import os
 import shutil
+import tarfile
+
+from flask import Flask, request
+
+from flask_httpauth import HTTPDigestAuth
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "REPLACE_ME"
@@ -22,9 +24,11 @@ def get_pw(username):
 @app.route("/<group>/<filename>", methods=["PUT"])
 @auth.login_required
 def upload(group, filename):
-    os.makedirs(os.path.join("files", group), exist_ok=True)
-    with open(os.path.join("files", group, filename), "wb") as f:
-        f.write(request.data)
+    groups = group.split("+")
+    for group in groups:
+        os.makedirs(os.path.join("files", group), exist_ok=True)
+        with open(os.path.join("files", group, filename), "wb") as f:
+            f.write(request.data)
     return "File uploaded"
 
 
